@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import type { User } from '@supabase/supabase-js'
 
 // Simple game access (we'll import from shared-auth later)
 class SimpleGameAccess {
@@ -93,15 +94,11 @@ const GAMES: Game[] = [
 ]
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    checkUser()
-  }, [])
-
-  async function checkUser() {
+  const checkUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -110,7 +107,11 @@ export default function DashboardPage() {
       setUser(user)
       setLoading(false)
     }
-  }
+  }, [router])
+
+  useEffect(() => {
+    checkUser()
+  }, [checkUser])
 
   function launchGame(gameId: string, tier: string) {
     if (!user) return
