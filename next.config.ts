@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // Remove the 'output: standalone' line
   eslint: {
     ignoreDuringBuilds: true,
   },
