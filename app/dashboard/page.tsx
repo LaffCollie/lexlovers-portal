@@ -123,8 +123,8 @@ export default function DashboardPage() {
     console.log('SSO URL:', url)
     
     // For now, just log - uncomment to actually redirect
-    // window.location.href = url
-    alert(`Would launch: ${gameId} (${tier} tier)\n\nSSO URL: ${url}`)
+    window.location.href = url
+    //alert(`Would launch: ${gameId} (${tier} tier)\n\nSSO URL: ${url}`)
   }
 
   async function handleSignOut() {
